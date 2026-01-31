@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light;
+  color: #37352f;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: block;
+  /* changed from flex center for dashboard layout */
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #fffefc;
+  /* Notion-like off-white */
+}
+
+@layer utilities {
+  .nature-banner {
+    background-image: url('https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2500&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center 30%;
+    height: 300px;
+    width: 100%;
+    position: relative;
+  }
+
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md border border-zinc-200 shadow-sm rounded-xl;
+  }
+
+  .glass-card {
+    /* Legacy support or new card style */
+    @apply bg-white rounded-xl border border-zinc-100 shadow-sm p-6 hover:shadow-md transition-shadow;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(52, 211, 153, 0.5);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
