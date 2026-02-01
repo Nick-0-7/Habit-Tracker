@@ -1,16 +1,48 @@
-# React + Vite
+Habit Tracker 🧠📊
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, visual habit-tracking web app that helps users track daily habits, monitor consistency, and see habit distribution across categories like Health, Productivity, Mindfulness, and Fitness.
 
-Currently, two official plugins are available:
+This is not a bloated “all-in-one life OS”. It does one job: track habits clearly and visually.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Features
 
-## React Compiler
+✅ Add and track daily habits
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+📅 Filter habits by Today or All Habits
 
-## Expanding the ESLint configuration
+🏷️ Categorize habits (Health, Productivity, Mindfulness, Fitness)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+📊 Visual Habit Distribution Chart
+
+🏆 Achievement badges & best streak tracking
+
+✔️ One-click habit completion toggle
+
+🎨 Clean, minimal dashboard UI
+
+🖥️ Preview
+
+Dashboard with habit list
+
+Category-wise donut chart
+
+Achievement section with streak tracking
+
+Modern UI focused on readability and speed
+
+🛠️ Tech Stack
+
+Frontend:
+
+HTML
+
+CSS
+
+JavaScript
+
+Live on below link
+https://habit-tracker-127a9.firebaseapp.com/
+
+Charts:
+
+Chart.js (for habit distribution visualization)
