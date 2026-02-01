@@ -60,13 +60,13 @@ export default function StatsChart({ habits }) {
     }).join(', ');
 
     return (
-        <div className="flex items-center gap-8 animate-scale-in">
+        <div className="flex items-center gap-6 animate-scale-in">
             {/* Donut Chart */}
-            <div className="relative w-48 h-48 rounded-full flex items-center justify-center shrink-0"
+            <div className="relative w-36 h-36 rounded-full flex items-center justify-center shrink-0"
                 style={{ background: `conic-gradient(${gradientSegments})` }}>
-                <div className="w-40 h-40 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
-                    <span className="text-4xl font-light text-zinc-800">{habits.length}</span>
-                    <span className="text-xs text-zinc-400 uppercase tracking-widest">Total</span>
+                <div className="w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
+                    <span className="text-3xl font-light text-zinc-800">{habits.length}</span>
+                    <span className="text-[10px] text-zinc-400 uppercase tracking-widest">Total</span>
                 </div>
             </div>
 

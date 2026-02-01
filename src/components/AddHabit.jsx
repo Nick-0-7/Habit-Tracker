@@ -20,15 +20,22 @@ export default function AddHabit() {
         e.preventDefault();
         if (!formData.name.trim()) return;
 
-        setLoading(true);
+        // Optimistic UI: Close modal and reset form immediately
+        const habitData = { ...formData }; // Capture data for the async call
+
+        setIsExpanded(false);
+        setFormData({ name: "", category: "Health", description: "" });
+        setLoading(false);
+
         try {
-            await addHabit(currentUser.uid, formData.name, formData.category, formData.description);
-            setFormData({ name: "", category: "Health", description: "" });
-            setIsExpanded(false);
+            console.log("Attempting to write to Firestore...");
+            await addHabit(currentUser.uid, habitData.name, habitData.category, habitData.description);
+            console.log("Firestore write success!");
         } catch (error) {
             console.error("Failed to add habit", error);
+            // In a real app complexity, we might show a toast here or undo the UI change
+            alert("Failed to save habit to cloud: " + error.message);
         }
-        setLoading(false);
     }
 
     if (!isExpanded) {

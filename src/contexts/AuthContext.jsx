@@ -3,7 +3,9 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    sendEmailVerification
 } from "firebase/auth";
 import { auth } from "../lib/firebase";
 
@@ -29,6 +31,18 @@ export function AuthProvider({ children }) {
         return signOut(auth);
     }
 
+    function resetPassword(email) {
+        return sendPasswordResetEmail(auth, email);
+    }
+
+    function verifyEmail(user) {
+        const actionCodeSettings = {
+            url: 'https://habit-tracker-127a9.web.app',
+            handleCodeInApp: true
+        };
+        return sendEmailVerification(user, actionCodeSettings);
+    }
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
@@ -42,7 +56,10 @@ export function AuthProvider({ children }) {
         currentUser,
         signup,
         login,
-        logout
+        logout,
+        logout,
+        resetPassword,
+        verifyEmail
     };
 
     return (

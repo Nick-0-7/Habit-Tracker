@@ -11,8 +11,17 @@ import {
     onSnapshot,
     deleteField,
     deleteDoc,
-    arrayUnion
+    arrayUnion,
+    enableMultiTabIndexedDbPersistence
 } from "firebase/firestore";
+
+/**
+ * Update user profile data
+ */
+export async function updateUserProfile(uid, data) {
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, data);
+}
 
 /**
  * Get user profile data
@@ -44,19 +53,40 @@ export async function createUserDoc(uid, email) {
     return initialData;
 }
 
+// Enable offline persistence to handle network flakes and immediate reloads
+try {
+    enableMultiTabIndexedDbPersistence(db).then(() => {
+        console.log("Firestore persistence enabled successfully");
+    }).catch((err) => {
+        if (err.code == 'failed-precondition') {
+            console.warn('Persistence failed: Multiple tabs open');
+        } else if (err.code == 'unimplemented') {
+            console.warn('Persistence not supported by browser');
+        }
+    });
+} catch (e) { console.warn("Persistence init failed", e); }
+
 /**
  * Add a new habit
  */
 export async function addHabit(uid, name, category = "General", description = "") {
-    const habitsRef = collection(db, "users", uid, "habits");
-    await addDoc(habitsRef, {
-        name,
-        category,
-        description,
-        history: {},
-        currentStreak: 0,
-        createdAt: new Date().toISOString()
-    });
+    try {
+        const habitsRef = collection(db, "users", uid, "habits");
+        console.log("Attempting to add habit:", { uid, name, category });
+
+        const docRef = await addDoc(habitsRef, {
+            name,
+            category,
+            description,
+            history: {},
+            currentStreak: 0,
+            createdAt: new Date().toISOString()
+        });
+        console.log("Habit added successfully via Firestore:", docRef.id);
+    } catch (error) {
+        console.error("CRITICAL: Error adding habit to Firestore:", error);
+        throw error;
+    }
 }
 
 /**
@@ -66,10 +96,18 @@ export function subscribeToHabits(uid, callback) {
     const habitsRef = collection(db, "users", uid, "habits");
 
     return onSnapshot(habitsRef, (snapshot) => {
-        const habits = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        const habits = snapshot.docs.map(doc => {
+            const data = doc.data();
+            // Recalculate streak on read to ensure it's always up to date
+            // This handles the "daily reset" logic visually
+            const realTimeStreak = calculateStreak(data.history || {});
+
+            return {
+                id: doc.id,
+                ...data,
+                currentStreak: realTimeStreak
+            };
+        });
         // Client-side sort
         habits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         callback(habits);

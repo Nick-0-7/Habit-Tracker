@@ -3,6 +3,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import Diagnostics from "./pages/Diagnostics";
 import { useAuth } from "./contexts/AuthContext";
 
 function PrivateRoute({ children }) {
@@ -23,6 +24,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/diagnostics"
+              element={
+                <PrivateRoute>
+                  <Diagnostics />
                 </PrivateRoute>
               }
             />
